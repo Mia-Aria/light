@@ -1,14 +1,40 @@
+/*
+ * @Author: gaoyang334 gaoyang334@jd.com
+ * @Date: 2025-07-03 11:01:33
+ * @LastEditors: gaoyang334 gaoyang334@jd.com
+ * @LastEditTime: 2025-07-03 11:06:16
+ * @FilePath: /light/src/App.tsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [data, setData] = React.useState<any>('');
+  const fetchData = async () => {
+    await fetch('http://182.92.182.238:4000/api/users/22').then(res => {
+      return res.json();
+    }).then(
+      res => {
+        setData(res);
+      }
+    )
+  }
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Dark in Light
+        </p>
+        <p>
+          {JSON.stringify(data)}  
         </p>
         <a
           className="App-link"
@@ -16,7 +42,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Learn DarkinLight
         </a>
       </header>
     </div>
