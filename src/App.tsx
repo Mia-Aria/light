@@ -2,7 +2,7 @@
  * @Author: gaoyang334 gaoyang334@jd.com
  * @Date: 2025-07-03 11:01:33
  * @LastEditors: gaoyang334 gaoyang334@jd.com
- * @LastEditTime: 2025-07-03 11:06:16
+ * @LastEditTime: 2025-07-03 21:03:51
  * @FilePath: /light/src/App.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -11,9 +11,13 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [input, setInput] = React.useState<number>(1);
   const [data, setData] = React.useState<any>('');
-  const fetchData = async () => {
-    await fetch('http://182.92.182.238:4000/api/users/22').then(res => {
+  const fetchData = async (key: number) => {
+    if(typeof key !== 'number') {
+      return;
+    }
+    await fetch(`http://182.92.182.238:4000/api/users/${key}`).then(res => {
       return res.json();
     }).then(
       res => {
@@ -23,8 +27,8 @@ function App() {
   }
 
   React.useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(input);
+  }, [input]);
 
   return (
     <div className="App">
@@ -33,6 +37,10 @@ function App() {
         <p>
           Dark in Light
         </p>
+        <p>
+          Please input a number~
+        </p>
+        <input type="number" value={input} onChange={(e) => setInput(Number(e.target.value))} />
         <p>
           {JSON.stringify(data)}  
         </p>
